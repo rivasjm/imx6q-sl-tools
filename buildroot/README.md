@@ -11,6 +11,7 @@ This Buildroot configuration generates and image with the following characterist
 * Linux 4.14.12 (Freescale fslc kernel)
 * U-boot Boundary Devices branch boundary-v2017.07
 * Includes NFS and OpenSSH packages for ethernet access and file sharing
+* Includes OpenMP support for the cross-compiler
 * Automatically configures `eth0`
 * Default root password: `sabrelite`
 * Optional: PREEMPT-RT patch (4.14.12-rt10)
