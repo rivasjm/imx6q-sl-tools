@@ -83,3 +83,27 @@ PasswordAuthentication yes
 ```
 
 To connect to the board via ssh: `ssh root@<board ip>`, and enter password `sabrelite`
+
+### Isolate cores (linux isolcpus)
+
+To exclude cores 1, 2 and 3 from the linux scheduler, execute this in u-boot's prompt:
+
+```bash
+setenv cmd_custom 'setenv bootargs isolcpus=1,2,3'
+```
+
+Cores 1, 2 and 3 can still be used via task affinities.
+
+To persist this u-boot change:
+
+```bash
+saveenv
+```
+
+We can check if these options have been passed to the linux kernel, by running this in the board once linux has booted-up:
+
+```bash
+cat /proc/cmdline
+```
+
+
