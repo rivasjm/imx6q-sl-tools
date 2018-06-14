@@ -58,7 +58,7 @@ sudo dd if=images/sdcard.img of=/dev/sdX
 
 This tips assume that the image is running on the board already.
 
-### Better prompt
+### Add current working directory to the prompt
 
 Edit the `PS1` portion in file `/etc/profile`:
 
