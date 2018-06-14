@@ -74,10 +74,12 @@ fi
 
 ### Allow SSH access
 
-Edit file `/etc/ssh/sshd_config` to include this line:
+Edit file `/etc/ssh/sshd_config` to include these lines (be careful to check if lines are already defined):
 
 ```
 AllowUsers root
+PermitRootLogin yes
+PasswordAuthentication yes
 ```
 
 To connect to the board via ssh: `ssh root@<board ip>`, and enter password `sabrelite`
