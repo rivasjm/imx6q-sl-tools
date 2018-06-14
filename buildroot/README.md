@@ -1,4 +1,21 @@
-# How to use buildroot to build the sdcard image
+# Buildroot configuration
+
+Buildroot configuration files to generate an sdcard for the sabrelite, with or without the PREEMPT-RT patch
+
+Also, my own configuration steps to configure the image once it is running.
+
+## Buildroot configuration characteristics
+
+This Buildroot configuration generates and image with the following characteristics:
+
+* Linux 4.14.12 (Freescale fslc kernel)
+* U-boot Boundary Devices branch boundary-v2017.07
+* Includes NFS and OpenSSH packages for ethernet access and file sharing
+* Automatically configures `eth0`
+* Default root password: `sabrelite`
+* Optional: PREEMPT-RT patch (4.14.12-rt10)
+
+## How to use buildroot to build the sdcard image
 
 Clone Buildroot in this directory
 
@@ -36,3 +53,31 @@ When the process is finished, the sdcard image can be found in `output/images/sd
 ```bash
 sudo dd if=images/sdcard.img of=/dev/sdX
 ```
+
+## Additional configuration
+
+This tips assume that the image is running on the board already.
+
+### Better prompt
+
+Edit the `PS1` portion in file `/etc/profile`:
+
+``` bash
+if [ "$PS1" ]; then
+        if [ "`id -u`" -eq 0 ]; then
+                export PS1='\w #: '
+        else
+                export PS1='\w $: '
+        fi
+fi
+```
+
+### Allow SSH access
+
+Edit file `/etc/ssh/sshd_config` to include this line:
+
+```
+AllowUsers root
+```
+
+To connect to the board via ssh: `ssh root@<board ip>`, and enter password `sabrelite`
