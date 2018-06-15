@@ -6,9 +6,63 @@
 
 static void disable(void* data) {
 
+    u32 val;
+
+    printk(KERN_INFO "Disabling L1 cache coherency\n");
+    
+    /* Read ACTLR register */
+    asm volatile("mrc p15, 0, %0, c1, c0, 1\t\n" : "=r"(val));
+    printk(KERN_INFO "ACTLR = 0x%x (before)\n", val);
+
+    /* 
+    By default, ACTLR=0x4f for each core
+    0x4f =  0b1001111
+              |  ||||
+              |  |||cache and TLB maintenance
+              |  ||L2 prefetch hint enable  
+              |  |L1 prefetch enable
+              |  write full lines of zero mode
+              SMP : coherency
+    */  
+
+    /* Write 0 in SMP bit (bit 6) */
+    val &= ~(1<<6);
+    asm volatile("mcr p15, 0, %0, c1, c0, 1\t\n" :: "r"(val));
+
+    /* Read ACTLR register */
+    asm volatile("mrc p15, 0, %0, c1, c0, 1\t\n" : "=r"(val));
+    printk(KERN_INFO "ACTLR = 0x%x (after)\n", val);
+
 }
 
 static void enable(void* data) {
+    
+    u32 val;
+
+    printk(KERN_INFO "Re-enabling L1 cache coherency\n");
+    
+    /* Read ACTLR register */
+    asm volatile("mrc p15, 0, %0, c1, c0, 1\t\n" : "=r"(val));
+    printk(KERN_INFO "ACTLR = 0x%x (before)\n", val);
+
+    /* 
+    By default, ACTLR=0x4f for each core
+    0x4f =  0b1001111
+              |  ||||
+              |  |||cache and TLB maintenance
+              |  ||L2 prefetch hint enable  
+              |  |L1 prefetch enable
+              |  write full lines of zero mode
+              SMP : coherency
+    */  
+
+    /* Write 1 in SMP bit (bit 6) */
+    val &= (1<<6);
+    asm volatile("mcr p15, 0, %0, c1, c0, 1\t\n" :: "r"(val));
+
+    /* Read ACTLR register */
+    asm volatile("mrc p15, 0, %0, c1, c0, 1\t\n" : "=r"(val));
+    printk(KERN_INFO "ACTLR = 0x%x (after)\n", val);
 
 }
 

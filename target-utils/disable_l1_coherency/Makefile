@@ -14,4 +14,4 @@ test.o:
 
 clean:
 	make -C $(KERNEL) SUBDIRS=$(PWD) clean
-	rm test.o
+	rm test
