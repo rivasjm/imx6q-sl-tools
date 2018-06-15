@@ -3,7 +3,14 @@
 PWD := $(shell pwd)
 obj-m += enable_counters.o
 
-all:
+all: test
 	make ARCH=arm CROSS_COMPILE=$(CROSS) -C $(KERNEL) SUBDIRS=$(PWD) modules
+
+test: test.o
+	arm-buildroot-linux-uclibcgnueabihf-gcc -o test test.o
+
+test.o:
+	arm-buildroot-linux-uclibcgnueabihf-gcc -c test.c
+
 clean:
 	make -C $(KERNEL) SUBDIRS=$(PWD) clean
