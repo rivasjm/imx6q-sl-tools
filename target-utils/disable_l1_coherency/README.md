@@ -1,6 +1,6 @@
 ## Disable L1 cache coherency
 
-*IMPORTANT*
+**IMPORTANT**
 
 Installing this module freezes the board, requiring a reboot. Coherency should be disabled at board boot time, inside the kernel
 
