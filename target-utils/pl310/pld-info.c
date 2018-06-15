@@ -98,7 +98,7 @@ int main(int argc, char const *argv[])
         printf("(%d) EPFALLOC=%d, DWREQ=%d\n", i, epfalloc, dwreq);
 
         //asm volatile("pld\t[%0]" :: "r" (data+i));
-         __builtin_prefetch (data+i, 0, 3);
+        //__builtin_prefetch (data+i, 0, 3);
     }
     
     /* Disable counters */
