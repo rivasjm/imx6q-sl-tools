@@ -2,7 +2,7 @@
 
 **IMPORTANT**
 
-Installing this module freezes the board, requiring a reboot. Coherency should be disabled at board boot time, inside the kernel. I keep this module here for documentation purposes.
+Installing this module freezes the board, requiring a reboot. Coherency should be disabled at board boot time, inside the kernel (maybe in arch/arm/mach-imx/mach-imx6q.c). I keep this module here for documentation purposes.
 
 # Process
 
