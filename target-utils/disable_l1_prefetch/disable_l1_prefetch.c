@@ -29,7 +29,7 @@ static void disable(void* data) {
     val &= ~(0b11<<1);
     asm volatile("mcr p15, 0, %0, c1, c0, 1\t\n" :: "r"(val));
 
-    /* Read ACTLR register */
+    /* Read ACTLR register to confirm change*/
     asm volatile("mrc p15, 0, %0, c1, c0, 1\t\n" : "=r"(val));
     printk(KERN_INFO "ACTLR = 0x%x (after)\n", val);
 
