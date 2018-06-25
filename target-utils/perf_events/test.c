@@ -21,6 +21,7 @@
 #include <sys/syscall.h>
 #include <linux/unistd.h>
 #include <linux/perf_event.h>
+#include <linux/hw_breakpoint.h>
 #include <sys/ioctl.h>
 
 //perf counter syscall
@@ -85,6 +86,8 @@ int main(int argc, char * argv[]) {
       y += 1;
     }
   }
+
+  printf("A message\n");
 
   // Read the counter
   asm volatile("nop;"); // pseudo-barrier
