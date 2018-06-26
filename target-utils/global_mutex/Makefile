@@ -1,22 +1,22 @@
 
 CC = arm-buildroot-linux-uclibcgnueabihf-gcc
 
-all: test create
+all: gmutex first second
 
-test: global_mutex.o test.o
-	$(CC) -o test test.o global_mutex.o -pthread -lrt
+first: first.c
+	$(CC) -o first first.c global_mutex.c -pthread -lrt
 
-create: global_mutex.o create.o
-	$(CC) -o create create.o global_mutex.o -pthread -lrt
+second: second.c
+	$(CC) -o second second.c global_mutex.c -pthread -lrt
 
-global_mutex.o: global_mutex.h global_mutex.c
+global_mutex.o: global_mutex.c global_mutex.h
 	$(CC) -c global_mutex.c
 
-test.o: test.c
-	$(CC) -c test.c
+gmutex: gmutex.o
+	$(CC) -o gmutex gmutex.o -pthread -lrt
 
-create.o: create.c
-	$(CC) -c create.c
+gmutex.o: gmutex.c
+	$(CC) -c gmutex.c 
 
 clean:
-	@rm -f *.o test
+	@rm -f *.o gmutex first second test
