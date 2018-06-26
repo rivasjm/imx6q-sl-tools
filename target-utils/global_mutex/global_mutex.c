@@ -9,7 +9,9 @@
 #include <unistd.h>             /* close */
 #include <stdlib.h>             /* malloc */
 
-int init_global_mutex(global_mutex_t *gmutex, char *name) {
+int init_global_mutex(global_mutex_t *gmutex) {
+
+    char *name = GLOBAL_MUTEX_NAME;
 
     int ret;
     pthread_mutex_t *pmutex;
@@ -27,7 +29,10 @@ int init_global_mutex(global_mutex_t *gmutex, char *name) {
     gmutex->fd = shm_open(name, O_RDWR|O_CREAT|O_EXCL, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP);
     if (gmutex->fd < 0) {
         if (errno == EEXIST) {
-            printf("Shared memory object already exists\n");
+            /* Shared memory object has been created already  */
+            
+            perror("shm_open");
+            return -1;
         }
     }
 
@@ -47,6 +52,14 @@ int init_global_mutex(global_mutex_t *gmutex, char *name) {
     pmutex = (pthread_mutex_t *) mmap(NULL, sizeof(pthread_mutex_t), PROT_READ|PROT_WRITE, MAP_SHARED, gmutex->fd, 0);
     if (pmutex == MAP_FAILED) {
         perror("mmap");
+        return -1;
+    }
+
+    /* File descriptor is no longer needed, it can be closed */
+
+    ret = close(gmutex->fd);
+    if (ret < 0) {
+        perror("close");
         return -1;
     }
 
@@ -103,10 +116,6 @@ int destroy_global_mutex(global_mutex_t *gmutex) {
         perror("munmap");
         err = -1;
     }
-
-    /* Close shm_open file */
-    
-    close(gmutex->fd);
 
     /* Unlink shared memory object */
     
