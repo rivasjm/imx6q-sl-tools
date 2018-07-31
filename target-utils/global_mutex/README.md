@@ -28,15 +28,15 @@ gmutex [-i] [-d] [-c] [-n name]
 
     -i
         Initializes (creates) a new global shared mutex with name 'name'. If 
-        'name' is nor provided with [-n name], a default name is used.
+        'name' is nor provided with [-n name], the default name is used.
 
     -d
-        Destroys global shared mutex 'name'. If 'name' is nor provided with 
-        [-n name], a default name is used.
+        Destroys global shared mutex 'name'. If 'name' is not provided with 
+        [-n name], the default name is used.
 
     -c
         Check whether global shared mutex 'name' exists. If 'name' is nor 
-        provided with [-n name], a default name is used.
+        provided with [-n name], the default name is used.
 
     -n name
         Name of the global shared mutex targetted by the command 
