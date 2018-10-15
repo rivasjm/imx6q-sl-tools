@@ -55,6 +55,8 @@ When the process is finished, the sdcard image can be found in `output/images/sd
 sudo dd if=images/sdcard.img of=/dev/sdX
 ```
 
+To know the device name of the sdcard, run `lsblk`
+
 ## Additional configuration
 
 This tips assume that the image is running on the board already.
